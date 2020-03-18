@@ -1,0 +1,130 @@
+---
+title: "Chapter3 3.18"
+author: "Tony"
+date: "2020/3/18"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plo
+
+## packages
+
+```{r}
+library(googlesheets4)
+```
+```{r}
+library(googlesheets4)
+```
+
+```{r}
+library(googlesheets4)
+```
+
+```{r}
+install.packages(c("googlesheets4"))
+```
+
+```{r}library(readr)
+hypothesisData <- read_csv("https://www.dropbox.com/s/0etoflih5eqc0bc/hypothesisData.csv?dl=1")
+View(hypothesisData)
+
+hypothesisData <- read_csv("https://www.dropbox.com/s/0etoflih5eqc0bc/hypothesisData.csv?dl=1")
+```
+
+```{r}
+library(readr)
+hypothesisData <- read_csv("https://www.dropbox.com/s/0etoflih5eqc0bc/hypothesisData.csv?dl=1")
+View(exDataPost80s)
+```
+
+
+```{r}
+b <- 3
+```
+
+```{r}
+a+b
+``
+my_108_total_credits <- 15
+_108_total_credits <- 15
+108_total_credits <- 15
+_my_108_total_credits <- 15
+my.108.total_credits <- 15
+.108.total_credits <- 15 # 隱藏變數
+.my.108.total_credits <- 15
+我的108學年總學分數 <- 15
+`我的108學年總學分數` <- 15 # 特殊名稱處理，`不是名稱的一部份
+`.108.total_credits` <- 15
+```
+
+```{r}
+
+```
+
+
+```{r}
+```
+
+
+```{r}
+"我的年紀" <- 22
+my_age='我的年紀'
+```
+
+
+```{r}
+num1 <- 5
+vNum1 <- c(2,5)
+vNum2 <- c(2, num1)
+```
+
+```{r}
+library(httr)
+library(dplyr)
+GET("https://api.github.com/repos/tpemartin/108-2-56-inclass-practice/commits") %>%
+  content() %>%
+  View()
+```
+
+```{r}
+library(googlesheets4)
+`出席狀況表單網址` <- "https://docs.google.com/spreadsheets/d/1oB-5hj1pO5g8FMpZbA7RgIG8NvCRx6WvLPwvleCEV4Q/edit#gid=987577191" 
+# 缺乏定義值
+ss <- as_sheets_id(`出席狀況表單網址`)
+homework_sheet <- sheets_read(ss,sheet=1)
+```
+
+```{r}
+logi1 <- c(T,TRUE,F,FALSE,FALSE)
+```
+
+```{r}
+
+```
+
+
+
+```{r}
+#

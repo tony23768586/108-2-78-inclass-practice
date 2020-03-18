@@ -1,0 +1,28 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1584515900473.000,
+    "dirty" : true,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "377C39BC",
+    "lastKnownWriteTime" : 1584517602,
+    "last_content_update" : 1584522193713,
+    "path" : "~/GitHub/108-2-78-inclass-practice/gledsmlsd.Rmd",
+    "project_path" : "gledsmlsd.Rmd",
+    "properties" : {
+        "cursorPosition" : "123,0",
+        "docOutlineVisible" : "1",
+        "last_setup_crc32" : "89B59A9Cbb338d19",
+        "scrollLine" : "101",
+        "tempName" : "Untitled2"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

@@ -1,0 +1,3 @@
+library(readr)
+hypothesisData <- read_csv("https://www.dropbox.com/s/0etoflih5eqc0bc/hypothesisData.csv?dl=1")
+View(hypothesisData)
