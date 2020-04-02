@@ -1,0 +1,108 @@
+---
+title: "Untitled"
+author: "Tony"
+date: "2020/4/2"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+```{r}
+# 用list
+list(
+  c("108學年第1學期","高級會計學","高等統計學"), #向量1
+  c("108學年第2學期","食在拉丁美洲")             #向量2
+)  
+```
+
+```{r}
+# list含兩個lists
+`小明108學年課表B` <- list(
+  list("108-1","高級會計學","高等統計學"),
+  list("108-2","食在拉丁美洲")
+)
+print(`小明108學年課表B`)
+```
+
+```{r}
+# list含兩個lists, 子層list又各含兩個vectors
+`小明108學年課表C` <- list(
+  list(
+    c("108-1"), # 可只寫 "108-1"
+    c("高級會計學","高等統計學")
+       ),
+  list(
+    c("108-2"),
+    c("食在拉丁美洲")
+  )
+)
+print(`小明108學年課表C`)
+```
+
+```{r}
+#物件值可以取名。
+`小明108學年課表D` <- list(
+  `上學期`=list(
+    semester=c("108-1"), 
+    course=c("高級會計學","高等統計學")
+       ),
+  `下學期`=list(
+    semester=c("108-2"),
+    course=c("食在拉丁美洲")
+  )
+)
+print(`小明108學年課表D`)
+
+```
+
+```{r}
+commit <- list(
+  author1 = c(
+    "Martin老師",
+    "mtlin@gm.ntpu.edu.tw",
+    "2020-03-25T07:17:40Z"),
+  author2 = list(
+    "Martin老師",
+    "mtlin@gm.ntpu.edu.tw",
+    ymd_hms("2020-03-25T07:17:40Z"))
+  )
+print(commit)
+```
+
+```{r}
+commit <- list(
+  author = list(
+    name="Martin老師",
+    email="mtlin@gm.ntpu.edu.tw",
+    time=ymd_hms("2020-03-25T07:17:40Z")
+    ),
+  committer = list(
+    name="emilyluckey",
+    email="emily007@gmail.com")
+    time=ymd_hms("2020-03-25T07:17:40Z")
+  ),
+    message ="update"
+)
+    print(commit)
+```
+
