@@ -1,30 +1,279 @@
 ---
-title: "4.8 lesson"
+title: "4.11lesson"
 author: "Tony"
 date: "2020/4/11"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r}
+vectorExample <- c("小明","小英","大雄")
+# 有多少位置可選：
+length(vectorExample)
 ```
 
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+```{r}
+vectorExample[[1]]
+vectorExample[[3]]
 ```
 
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r}
+listExample <- 
+  list(
+    student="小明",
+    `學期`=list(
+      `108-1`=list(
+        list(
+          name="個體經濟學",
+          teacher="Alice",
+          grade=85
+        )
+      ),
+      `108-2`=list(
+        list(
+          name="總體經濟學",
+          teacher="Mark",
+          grade=78
+        )
+      )
+    )
+  )
+# 有多少位置可選：
+length(listExample)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+```{r}
+listExample[[1]]
+listExample[[2]]
+```
+
+```{r}
+library(jsonlite)
+fromJSON("https://data.tainan.gov.tw/dataset/4cd9345a-04bf-4328-a97d-314ff78b4763/resource/afc025fc-1ef4-447c-b785-a680391d0ca1/download/tnsport2.json", simplifyDataFrame = F) -> tainanSportsMap
+
+length(tainanSportsMap)
+```
+
+```{r}
+tainanSportsMap[[1]]
+tainanSportsMap[[1076]]
+```
+
+#### 用名字選`$.`{-}
+```{r}
+# 有多少名字可選
+names(listExample)
+```
+
+```{r}
+listExample$student
+listExample$`學期` #特殊命名依然要用反頓點呼叫
+```
+
+```{r}
+str(listExample)
+```
+
+```{r}
+str(listExample$`學期`) #Micrsoft 要加反頓點
+#意義就在於特別拉`學期`的資料結構來看
+```
+
+#其實也可以用[["名字"]]來選，只是名字要以字串「值」的方式來寫，也就是要用引號一對"…", 不用反頓點一對`…`。
+
+
+```{r}
+listExample[["student"]]
+listExample$student
+
+listExample[["學期"]] #小心不是反頓點喔，以字串的方式表現
+listExample$`學期`
+```
+
+```{r}
+listExample[[student]] #錯誤: 找不到物件 'student'
+#表示在Global environment 沒有student物件
+```
+
+```{r}
+student <- "student"
+listExample[[student]]
+```
+
+```{r}
+fromJSON("http://data.ntpc.gov.tw/api/v1/rest/datastore/382000000A-000157-002",
+         simplifyDataFrame = F) -> newTaipeiCityVaccine
+```
+
+```{r}
+str(newTaipeiCityVaccine)
+length(newTaipeiCityVaccine) #用位置取元素
+names(newTaipeiCityVaccine)  #用名字取元素
+```
+
+```{r}
+str(newTaipeiCityVaccine[[1]])
+str(newTaipeiCityVaccine$success)
+str(newTaipeiCityVaccine[["success"]])
+
+str(newTaipeiCityVaccine[[2]], max.level =1)
+    #最多顯示幾層
+str(newTaipeiCityVaccine$result, max.level =1)
+str(newTaipeiCityVaccine[["result"]], max.level =1)
+
+#以上是選擇一個元素
+```
+
+### 選擇「多個元素」
+
+#### 連續選取 `[c(...)]`{-}
+
+```{r}
+vectorExample
+vectorExample[c(1,3)]
+vectorExample[c(3,2,1)] #選多個元素時，產生重新排列效果
+```
+
+```{r}
+# 顯示到第一層
+str(listExample, max.level = 1)
+
+str(listExample[c(1,2)], max.level = 1)
+str(listExample[c(2,1)], max.level = 1)
+```
+
+任選數筆tainanSprotsMap 的運動地點
+```{r}
+str(tainanSportsMap, max.level = 1)
+str(tainanSportsMap[c(1,382,1076)], max.level = 1)
+```
+
+#### 用名字選[c("name1","name2",...)]
+
+```{r}
+# 顯示到第一層
+listExample[[c("學期")]] #一個中括號不適合只選一個
+listExample[c("student","學期")]
+listExample[c("學期","student")]
+```
+
+臺北市夜市資料（來自[臺北市食材登錄平台食材來源資訊]）
+```{r}
+fromJSON("https://www.dropbox.com/s/qnm9bnz7vccrvcz/taipeiNightMarkets.json?dl=1", simplifyDataFrame = F) -> taipeiNightMarkets
+
+taipeiNightMarkets[c("士林觀光夜市","寧夏觀光夜市")]
+str(taipeiNightMarkets[c("士林觀光夜市","寧夏觀光夜市")], max.level=1)
+str(taipeiNightMarkets[c(2,5,7)], max.level = 1)
+```
+
+#### 用「要/不要」邏輯向量選[c(T,T,F,...)]
+
+```{r}
+vectorExample
+vectorExample[c(T,T,F)] # 要，要，不要
+```
+
+```{r}
+str(listExample)
+str(listExample[c(F,T)]) # 不要，要
+str(listExample[c(T,T)]) # 要，要
+```
+
+用「要/不要」邏輯向量自taipeiNightMarkets選出 寧夏觀光夜市，西昌街觀光夜市，大龍街夜市， 雙城街夜市。
+
+```{r}
+names(taipeiNightMarkets)
+```
+
+```{r}
+c(T,F,
+  F,F,
+  T,F,
+  F,F,
+  F,T,
+  F,F,
+  F,T) -> selectMarkets
+taipeiNightMarkets[selectMarkets]
+```
+
+```{r}
+selectMarkets <- rep(F,14) # repeat F by 14 times
+print(selectMarkets)
+selectMarkets[c(1,5,10,14)] <- TRUE # `<-` `replace`
+print(selectMarkets)
+```
+
+```{r}
+str(taipeiNightMarkets[selectMarkets],max.level = 1)
+```
+
+以下兩個表面都是選取"學期"：
+```{r}
+get1 <- listExample[["學期"]]  #拿出某個物件值
+get2 <- listExample["學期"]    #不推薦
+```
+
+
+```{r}
+# get1 # 學期拿出來，有3個元素的list
+str(listExample, max.level = 3)
+```
+
+```{r}
+get1 <- listExample[["學期"]]
+str(get1, max.level = 1)
+```
+
+```{r}
+get2 <- listExample["學期"] #listExample 只留下學期元素，是個只有一個元素的list
+str(get2, max.level = 1)
+str(get2, max.level = 2)
+```
+################################################
+```{r}
+str(listExample, max.level = 3)
+```
+
+```{r}
+str(get1, max.level = 1)
+```
+
+```{r}
+str(get2, max.level = 2)
+```
+
+###連鎖選取
+
+```{r}
+numVector <- c(2,3,6,-1,4,2,6)
+select1 <- numVector[c(1,4)]; select1
+select2 <- select1[[1]]; select2
+
+# 相當於
+numVector[c(1,4)][[1]]
+```
+
+```{r}
+select1 <- numVector[c(1,4)];select1 #藉由;可將不同行指令輸在一起 
+```
+
+```{r}  
+select1 <- numVector[c(T,T,F,T,F,F,T)]; select1
+select2 <- select1[c(1,4)]; select2
+
+# 相當於
+numVector[c(T,T,F,T,F,F,T)][c(1,4)]
+#同246
+```
+
+```{r}
+majors <- c("經濟學系","經濟學系","社會學系","社工系","經濟學系")
+names <- c("小英", "小美", "大雄","阿華", "阿尼")
+gender <- c("F","F","M","F","M")
+
+econOnly <- c(T,T,F,F,T) ; econOnly
+names[econOnly]
+gender[econOnly]
+econFemaleOnly <- c(T,T,F) ; econFemaleOnly
+names[econOnly][econFemaleOnly]
+```
+
