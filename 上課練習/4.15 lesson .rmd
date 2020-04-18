@@ -63,7 +63,7 @@ listExample[[2]]
 
 ```{r}
 get1 <- listExample[["學期"]] #拿出來
-get1 <- listExample$`學期`      #拿出來
+get1 <- listExample$`學期`    #拿出來
 get2 <- listExample["學期"]   #只留下
 ```
 
@@ -78,6 +78,11 @@ str(get1_layer2)
 ```
 
 ```{r}
+get1_layer2$teacher
+```
+
+### get1 取出
+```{r}
 get1 <- listExample[["學期"]] #拿出來
 get1$`108-1` ->get1_layer1    #layer_1
 get1_layer1[[1]] -> get1_layer #layer_2
@@ -86,7 +91,220 @@ get1_layer2$teacher
 listExample[["學期"]]$`108-1`[[1]]$teacher
 ```
 
+### get2 取出
 ```{r}
+get2 <- listExample["學期"]
+get2_layer1 <-get2[[1]]  #get2$`學期`;get2[["學期"]]
+get1_layer1 <-get2_layer1[["108-1"]]
+get2_layer3 <-get2_layer2[[1]]
+get2_layer3$taecher
+```
+
+```{r}
+listExample["學期"][[1]][["108-1"]][[1]]$teacher
+listExample["學期"][["學期"]][["108-1"]][[1]]$teacher  #第一個中括號有點多餘，寧願直接兩個
+```
+
+```{r}
+vector1 <- c(a=1,b=3,c=4)
+vector1[["a"]]
+vector1[c("a","c")]
+vector1$a  #錢號用在list，這裡不行沒關係
+
+list1 <-list(a=1,b=3,c=4)
+list1[["a"]]
+list1[c("a","c")]
+list1$a
+```
+
+```{r}
+today <- list(
+  list("台北市",
+       highest_temp=c(highest_temp = 25),
+       lowest_temp=c(lowest_temp = 18)),
+  list("新北市",
+       highest_temp=c(highest_temp = 24),
+       lowest_temp=c(lowest_temp = 15)))
+str(today)
+```
+
+```{r}
+today[[1]]$highest_temp
+```
+
+
+```{r}
+tomorrow <- list(
+  list("台北市",c(highest_temp = 25),c(lowest_temp = 18)),
+  list("新北市",c(highest_temp = 24),c(lowest_temp = 15)))
+str(today)
+```
+
+```{r}
+tomorrow <- list(
+  list("台北市",c(highest_temp = 25),c(lowest_temp = 18)),
+  list("新北市",c(highest_temp = 24),c(lowest_temp = 15)))
 
 ```
+
+
+
+
+
+```{r}
+a <- c("1","b","TRUE")
+a
+a[[2]] <- "c" # 元素存在: 替換
+a[[4]] <- "7" # 元素不存在： 增加
+a[c(5,6)] <- c("J", "K")
+a
+```
+
+```{r}
+a[[7]] <- "Johnson"
+a
+
+a <- c(a, c("Mary"))
+```
+
+
+```{r}
+library(lubridate)
+list1 <- 
+  list(
+    list(
+      name    ="Jack",
+      birthday=ymd("1998-03-21"),
+      status  =c(height=177, weight=80)
+    )
+  )
+
+str(list1)
+```
+
+```{r}
+# 更改日期
+list1[[1]]$birthday <- ymd("1997-03-21")
+
+# 新增資料
+list1[[2]] <- list(
+  name="Mary",
+  birthday=ymd("1998-08-24")
+)
+
+str(list1)
+```
+
+```{r}
+list1[[2]]$status <- c(height=163, weight=45)
+list1[[1]]$status[["height"]] <- 176
+str(list1)  
+```
+
+```{r}
+list1[[1]][["age"]] <- 21  #就不用和母層相同
+list1[[2]]["age"] <- list(21)
+
+# 改變「一個」時，使用[[ ]]比較不會錯。
+str(list1)
+```
+
+```{r}
+list1[[1]][c("bloodType","registered")] <- list("AB",TRUE)
+
+str(list1)
+```
+
+```{r}
+listExample <- 
+  list(
+    student="小明",
+    `學期`=list(
+      `108-1`=list(
+        list(
+          name="個體經濟學",
+          teacher="Alice",
+          grade=85
+        )
+      ),
+      `108-2`=list(
+        list(
+          name="總體經濟學",
+          teacher="Mark",
+          grade=78
+        )
+      )
+    )
+  )
+# 有多少位置可選：
+length(listExample)
+```
+
+```{r}
+# 108-1新增一科目成績
+listExample$學期$`108-1`[[2]] <-
+  list(name="產業經濟學")
+str(listExample)
+
+listExample$學期$`108-1`[[2]][c("teacher","grade")] <- 
+  list("Wen",88)
+  
+str(listExample)
+```
+
+```{r}
+print(a)
+a[-c(1,3)]
+a[c(-2)]        #到這裡還不夠 
+
+print(a)
+a[-c(1,3)] -> a # 要回存才算真的刪除
+```
+
+```{r}
+library(lubridate)
+list1 <- 
+  list(
+    list(
+      name="Jack",
+      birthday=ymd("1998-03-21"),
+      status=c(height=177, weight=80)
+    ),
+    list(
+      name="Mary",
+      birthday=ymd("1998-08-24"),
+      status=c(height=163, weight=45),
+      age=21,
+      bloodType="AB"
+    )
+  )
+str(list1)
+```
+
+#刪除Jack的Status
+```{r}
+list1[[1]][-c(3)] -> list1[[1]]   
+#小心不要直接存回去list 否則把list全部取回
+str(list1)
+```
+
+###刪除Mary的status, blookType.
+```{r}
+list1[[2]][-c(3,5)] -> list1[[2]]
+str(list1)
+```
+
+###list元素要刪除時也可以用[.]<-NULL, [[.]]<-NULL   因為list可能很多層，所以有這個方法會比較方便
+```{r}
+str(list1)
+list1[[2]][c(1,2)] <- NULL
+### list1[[2]]-[c(1,2)] -> list1[[2]]  last chunk
+str(list1)
+```
+
+```{r}
+library(jsonlite)
+fromJSON("https://data.ntpc.gov.tw/od/data/api/54DDDC93-589C-4858-9C95-18B2046CC1FC?$format=json", simplifyDataFrame = F) -> newTaipeiYouBike
+```
+
 
